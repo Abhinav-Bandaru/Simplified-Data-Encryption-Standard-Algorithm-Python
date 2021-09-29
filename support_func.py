@@ -1,3 +1,5 @@
+# Author: Abhinav Bandaru
+
 # Given 2 strings text and pattern, the contents of the string text are re-arranged according to the indices order in the string pattern
 # Example: 
 # text = "101101", pattern = "210354"
