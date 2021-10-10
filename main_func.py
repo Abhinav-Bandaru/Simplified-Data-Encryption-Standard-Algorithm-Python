@@ -19,18 +19,15 @@
   # Output = ciphertext = "10010111"
 
 def func(key1,key2):
-  
     print("S-DES Encryption: \n")
     plaintext = input("Enter 8 bit Plain Text: ")
-    ip = "15203746"   # Predefined permutation sequence
-    
+    ip = "15203746"
     print("I/P order sequence: 2 6 3 1 | 4 8 5 7")
     plaintext = permutate(plaintext, ip)
     print("After IP: ",plaintext)
 
     print("\nE/P order sequence: 4 1 2 3 | 2 3 4 1")
-    ep = "30121230" # Predefined permutation sequence
-    
+    ep = "30121230"
     L = plaintext[:4]
     R = plaintext[4:]
 
@@ -43,12 +40,11 @@ def func(key1,key2):
     print("After XOR: ",xor(permutate(R,ep),key1))
 
     eptext = xor(permutate(R,ep),key1)
-    
     epL = eptext[:4]
     epR= eptext[4:]
 
-    s0 = [[1,0,3,2],[3,2,1,0],[0,2,1,3],[3,1,3,2]]    # S-Box 0
-    s1 = [[0,1,2,3],[2,0,1,3],[3,0,1,0],[2,1,0,3]]    # S-Box 1
+    s0 = [[1,0,3,2],[3,2,1,0],[0,2,1,3],[3,1,3,2]]
+    s1 = [[0,1,2,3],[2,0,1,3],[3,0,1,0],[2,1,0,3]]
     print("\nS-Boxes: ")
     print("S0: ",s0)
     print("S1: ",s1)
@@ -57,17 +53,17 @@ def func(key1,key2):
     print("Row: ",epL[0]+epL[3])
     print("Column: ",epL[1]+epL[2])
     fk1L = s0[int(epL[0]+epL[3],2)][int(epL[1]+epL[2],2)]
-    print("S0[",int(epL[0]+epL[3],2),"][",int(epL[1]+epL[2],2),"] = ",fk1L," -> ",bin(fk1L)[2:])
+    print("S0[",int(epL[0]+epL[3],2),"][",int(epL[1]+epL[2],2),"] = ",fk1L," -> ",bin(fk1L)[2:].rjust(2,'0'))
 
     print("\nNext 4 bits we take: ")
     print("Row: ",epR[0]+epR[3])
     print("Column: ",epR[1]+epR[2])
     fk1R = s1[int(epR[0]+epR[3],2)][int(epR[1]+epR[2],2)]
-    print("S1[",int(epR[0]+epR[3],2),"][",int(epR[1]+epR[2],2),"] = ",fk1R," -> ",bin(fk1R)[2:])
+    print("S1[",int(epR[0]+epR[3],2),"][",int(epR[1]+epR[2],2),"] = ",fk1R," -> ",bin(fk1R)[2:].rjust(2,'0'))
 
-    temp = str(bin(fk1L)[2:]+bin(fk1R)[2:])
+    temp = str(bin(fk1L)[2:].rjust(2,'0')+bin(fk1R)[2:].rjust(2,'0'))
     print("\nP4: 2 4 3 1")
-    p4_pattern = "1320"   # Predefined permutation sequence
+    p4_pattern = "1320"
     p4 = permutate(temp,p4_pattern)
     print("After Permuting with P4: ",p4)
 
@@ -105,17 +101,17 @@ def func(key1,key2):
     print("Row: ",epL[0]+epL[3])
     print("Column: ",epL[1]+epL[2])
     fk1L = s0[int(epL[0]+epL[3],2)][int(epL[1]+epL[2],2)]
-    print("S0[",int(epL[0]+epL[3],2),"][",int(epL[1]+epL[2],2),"] = ",fk1L," -> ",bin(fk1L)[2:].zfill(2))
+    print("S0[",int(epL[0]+epL[3],2),"][",int(epL[1]+epL[2],2),"] = ",fk1L," -> ",bin(fk1L)[2:].rjust(2,'0'))
 
     print("\nNext 4 bits we take: ")
     print("Row: ",epR[0]+epR[3])
     print("Column: ",epR[1]+epR[2])
     fk1R = s1[int(epR[0]+epR[3],2)][int(epR[1]+epR[2],2)]
-    print("S1[",int(epR[0]+epR[3],2),"][",int(epR[1]+epR[2],2),"] = ",fk1R," -> ",bin(fk1R)[2:].zfill(2))
+    print("S1[",int(epR[0]+epR[3],2),"][",int(epR[1]+epR[2],2),"] = ",fk1R," -> ",bin(fk1R)[2:].rjust(2,'0'))
 
-    temp = str(bin(fk1L)[2:].zfill(2)+bin(fk1R)[2:].zfill(2))
+    temp = str(bin(fk1L)[2:].rjust(2,'0')+bin(fk1R)[2:].rjust(2,'0'))
     print("\nP4: 2 4 3 1")
-    p4_pattern = "1320"   # Predefined permutation sequence
+    p4_pattern = "1320"
     p4 = permutate(temp,p4_pattern)
     print("After Permuting with P4: ",p4)
 
@@ -126,8 +122,10 @@ def func(key1,key2):
     print("After XOR: ",fk1)
     print("\nSecond round of operation is completed")
 
-    ipinv = "30246175"    # Predefined permutation sequence
+    ipinv = "30246175"
     print("New Text: ",fk1+R)
     temp2 = fk1+R
     print("IP Inverse Sequence: 4 1 3 5 7 2 8 6")
     print("\nOn applying IP Inverse, CIPHER TEXT: ",permutate(temp2,ipinv))
+    
+    
